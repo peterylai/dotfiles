@@ -1,0 +1,14 @@
+# http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup
+[include]
+  path = ~/dotfiles/.user_gitconfig ;
+[color]
+  ui = true
+[alias]
+  st = status -sb -uall
+[core]
+  editor = subl
+  excludesfile = ~/.gitignore_global
+[credential]
+  helper = osxkeychain
+[push]
+  default = simple
