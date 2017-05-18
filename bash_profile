@@ -22,6 +22,15 @@ export PGHOST=localhost
 alias ls='ls -G'
 alias ll='ls -al'
 alias b='cd ..'
+alias sbp='source ~/.bash_profile'
+alias gl='git log --oneline'
+alias gs='git status'
+alias gcm='git checkout master'
+alias gp='push_branch'
+alias gpf='push_branch force'
+alias gd='git diff'
+alias gco='git checkout'
+alias prune='prune_git'
 alias subl='open -a "Sublime Text"'
 export EDITOR="sublime -w"
 
@@ -68,6 +77,19 @@ get_git_branch() {
     branch_name="(unknown)"
     printf $branch_name
 }
+
+function push_branch {
+ if [ "$1" = "force" ]; then
+   git push origin $(get_git_branch) -f
+ else
+   git push origin $(get_git_branch)
+ fi
+}
+
+function prune_git() {
+    git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+}
+
 # Git status information
 prompt_git() {
     local git_info git_state uc us ut st
@@ -112,3 +134,7 @@ my_prompt_icon="♬"
 # Build the prompt
 # ---------------------
 PROMPT_COMMAND='PS1="${style_user}${my_prompt_icon}\[ \] ${style_path}\w ${RESET}$(prompt_git) ${RESET}"'
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
